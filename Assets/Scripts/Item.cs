@@ -16,13 +16,14 @@ public enum EquipSlot
     COUNT,
 }
 
-[CreateAssetMenu(fileName = "Create Item", menuName = "Items/Create New")]
+[CreateAssetMenu(fileName = "New Item", menuName = "Items/Create New")]
 public class Item: ScriptableObject
 {
     public string    itemName;
     public int       itemPrice;
     public EquipSlot itemSlot;
     public Sprite    itemIcon;
+    public Sprite    equipSprite;
 }
 
 

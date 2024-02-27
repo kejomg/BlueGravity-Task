@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6b65dbd2bdd1140841d9e34932f162, type: 3}
+  m_Name: Steel Dagger
+  m_EditorClassIdentifier: 
+  itemName: Iron Dagger
+  itemPrice: 500
+  itemSlot: 4
+  itemIcon: {fileID: 21300000, guid: c2f0536a0535f2d48842f8525beb4bb6, type: 3}
+  equipSprite: {fileID: 21300000, guid: 8923765c279ee0241afd55ff5dc53f92, type: 3}

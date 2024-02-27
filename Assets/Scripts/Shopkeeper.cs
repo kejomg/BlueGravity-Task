@@ -12,6 +12,7 @@ public class Shopkeeper : MonoBehaviour, IInteractable
 
     public void OpenShop(bool state) 
     {
+        if (state == UIController.shopPanel.activeSelf) return;
         UIController.shopPanel.SetActive(state);
         UIController.inventoryPanel.SetActive(state);
     }

@@ -2,14 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class Inventory : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
     public InventoryWindow inventoryWindow;
-
-    public TextMeshProUGUI goldText;
     public int gold;
 
     public bool hasSpace()
@@ -29,13 +26,13 @@ public class Inventory : MonoBehaviour
         inventoryWindow.GenerateInventory();
     }
 
-    private void RemoveItem(Item item)
+    public void RemoveItem(Item item)
     {
         items.Remove(item);
     }
 
-    private void AddGold(int amount)
+    public void AddGold(int amount)
     {
-        gold +=amount;
+        gold += amount;
     }
 }

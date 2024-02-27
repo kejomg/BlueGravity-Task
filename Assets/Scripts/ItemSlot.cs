@@ -11,4 +11,5 @@ public class ItemSlot : MonoBehaviour
     public TextMeshProUGUI priceText;
     public Image icon;
     public Item item;
+    public bool isEquipSlot;
 }

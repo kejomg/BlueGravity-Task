@@ -54,14 +54,4 @@ public class Shop : MonoBehaviour
 
         }
     }
-    //Refreshes the shop.
-    public void RefreshShop()
-    {
-        foreach(Transform t in content)
-        {
-            t.gameObject.GetComponent<Button>().interactable = true;
-        }
-        items.Clear();
-        GenerateShop();
-    }
 }

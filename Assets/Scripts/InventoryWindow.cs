@@ -30,7 +30,7 @@ public class InventoryWindow : MonoBehaviour
         {
             int i = index;
             GameObject itemSlot = Instantiate(ItemShopPrefab, content);
-            itemSlot.GetComponent<Button>().onClick.AddListener(delegate () { SellItem(i); });
+            itemSlot.GetComponent<Button>().onClick.AddListener(delegate () { SellOrEquipItem(i); });
             UpdateUI(itemSlot, item);
             index++;
         }
@@ -47,11 +47,15 @@ public class InventoryWindow : MonoBehaviour
         itemSlot.icon.sprite = item.itemIcon;
     }
 
-    void SellItem(int index)
+    void SellOrEquipItem(int index)
     {
         if (UI.shopPanel.activeSelf)
         {
             player.inventory.SellItem(index);
+        }
+        else
+        {
+            player.EquipItem(index);
         }
     }
 }

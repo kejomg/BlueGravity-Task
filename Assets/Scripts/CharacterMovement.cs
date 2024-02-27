@@ -14,7 +14,9 @@ public class CharacterMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        if (Input.GetKeyDown(KeyCode.I)) UI.inventoryPanel.SetActive(!UI.inventoryPanel.activeSelf);
+        if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.B)) UI.inventoryPanel.SetActive(!UI.inventoryPanel.activeSelf);
+        if (Input.GetKeyDown(KeyCode.C)) UI.equipmentPanel.SetActive(!UI.equipmentPanel.activeSelf);
+        if (Input.GetKeyDown(KeyCode.Escape)) UI.CloseAllPanels();
     }
     private void FixedUpdate()
     {
