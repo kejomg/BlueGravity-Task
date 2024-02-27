@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 public class Shop : MonoBehaviour
@@ -78,12 +78,23 @@ public class Shop : MonoBehaviour
     //Refreshes the shop.
     public void RefreshShop()
     {
+        foreach(Transform t in content)
+        {
+            t.gameObject.GetComponent<Button>().interactable = true;
+        }
         items.Clear();
         GenerateShop();
     }
 
-    public void BuyItem()
+    public void BuyItem(int index)
     {
-
+        Item item = items[index].GetComponent<Item>();
+        if(player.inventory.gold >= item.itemPrice || player.inventory.hasSpace())
+        {
+            player.inventory.gold -= item.itemPrice;
+            player.inventory.AddItem(item);
+            player.inventory.UpdateUI();
+            content.GetChild(index).GetComponent<Button>().interactable = false;
+        }
     }
 }

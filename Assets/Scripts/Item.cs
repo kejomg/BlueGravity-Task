@@ -29,3 +29,5 @@ public class Item : MonoBehaviour
     public TextMeshProUGUI priceText;
     public Image icon;
 }
+
+

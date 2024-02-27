@@ -10,11 +10,6 @@ public class CharacterMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     Vector2 movement;
-
-    private void Start()
-    {
-        
-    }
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");

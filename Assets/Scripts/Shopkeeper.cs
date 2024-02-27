@@ -5,10 +5,14 @@ using UnityEngine;
 public class Shopkeeper : MonoBehaviour, IInteractable
 {
     public GameObject InteractionKey;
-    public GameObject ShopPanel;
+    public UIController UIController;
     public void StartInteraction() => OpenShop(true);
     public void FinishInteraction() => OpenShop(false);
     public void DisplayKey(bool state) => InteractionKey.SetActive(state);
 
-    public void OpenShop(bool state) => ShopPanel.SetActive(state);
+    public void OpenShop(bool state) 
+    {
+        UIController.shopPanel.SetActive(state);
+        UIController.inventoryPanel.SetActive(state);
+    }
 }
