@@ -5,14 +5,21 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
+    public UIController UI;
     public float movementSpeed = 1f;
     public Rigidbody2D rb;
     public Animator animator;
     Vector2 movement;
+
+    private void Start()
+    {
+        
+    }
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        if (Input.GetKeyDown(KeyCode.I)) UI.inventoryPanel.SetActive(!UI.inventoryPanel.activeSelf);
     }
     private void FixedUpdate()
     {
