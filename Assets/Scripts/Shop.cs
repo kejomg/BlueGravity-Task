@@ -10,71 +10,50 @@ public class Shop : MonoBehaviour
 {
     public Player player;
 
-    public List<GameObject> items = new();
+    public List<Item> items = new();
     public Transform content;
     public GameObject ItemShopPrefab;
-    public RandomItemGenerator itemGenerator;
     void Start()
     {
         GenerateShop();
     }
 
-    //Generates a random shop with <amount> items.
+    //Generates the shop items
     void GenerateShop()
     {
-        for (int i = 0; i < 15; i++) 
+        int index = 0;
+        foreach(Item item in items)
         {
-            //Randomizes the item.
-            GameObject go = content.GetChild(i).gameObject;
-            Item item = go.GetComponent<Item>();
-            itemGenerator.GenerateRandomItem(ref item);
-            items.Add(go);
-            UpdateUI(go);
+            int i = index;
+            GameObject itemSlot = Instantiate(ItemShopPrefab, content);
+            itemSlot.GetComponent<Button>().onClick.AddListener(delegate () { BuyItem(i); });
+            UpdateUI(itemSlot,item);
+            index++;
         }
     }
 
     //Updates the UI.
-    void UpdateUI(GameObject go)
+    void UpdateUI(GameObject go, Item item)
     {
-        Item item = go.GetComponent<Item>();
-        RectTransform rt = item.icon.rectTransform;
-        item.nameText.text = item.itemName;
-        item.priceText.text = item.itemPrice.ToString() + "G";
-        item.icon.sprite = item.itemIcon;
-
-        /*
-        Definitely not the prettiest thing to do, but the sprites came in different
-        sizes and shapes to fit the character, so I manually fixed them according to the slot.
-        Would definitely not do this in a real project, since I would have proper icons.
-         */
-
-        if (item.itemSlot == ItemSlot.Headgear)
-        {
-            rt.localScale = Vector3.one * 1.5f;
-            rt.anchoredPosition = new Vector3(0, -9.36f, 0) ;
-        }
-        if (item.itemSlot == ItemSlot.Face)
-        {
-            rt.localScale = Vector3.one * 2f;
-            rt.anchoredPosition = new Vector3(0, -9.36f, 0);
-        }
-        if (item.itemSlot == ItemSlot.Armor)
-        {
-            rt.localScale = Vector3.one * 1.5f;
-            rt.anchoredPosition = new Vector3(0, 15, 0);
-        }
-        if (item.itemSlot == ItemSlot.Pants)
-        {
-            rt.localScale = Vector3.one * 1.5f;
-            rt.anchoredPosition = new Vector3(0, 20, 0);
-        }
-        if (item.itemSlot == ItemSlot.Dagger)
-        {
-            rt.localScale = Vector3.one * 3f;
-            rt.anchoredPosition = new Vector3(0, -9.36f, 0);
-        }
+        ItemSlot itemSlot = go.GetComponent<ItemSlot>();
+        itemSlot.item = item;
+        itemSlot.nameText.text = item.itemName;
+        itemSlot.priceText.text = item.itemPrice.ToString() + " G";
+        itemSlot.icon.sprite = item.itemIcon;
     }
 
+    public void BuyItem(int index)
+    {
+        Item item = items[index];
+
+        if (player.inventory.gold >= item.itemPrice && player.inventory.hasSpace())
+        {
+            player.inventory.gold -= item.itemPrice;
+            player.inventory.AddItem(item);
+            player.inventory.inventoryWindow.GenerateInventory();
+
+        }
+    }
     //Refreshes the shop.
     public void RefreshShop()
     {
@@ -84,17 +63,5 @@ public class Shop : MonoBehaviour
         }
         items.Clear();
         GenerateShop();
-    }
-
-    public void BuyItem(int index)
-    {
-        Item item = items[index].GetComponent<Item>();
-        if(player.inventory.gold >= item.itemPrice || player.inventory.hasSpace())
-        {
-            player.inventory.gold -= item.itemPrice;
-            player.inventory.AddItem(item);
-            player.inventory.UpdateUI();
-            content.GetChild(index).GetComponent<Button>().interactable = false;
-        }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum ItemSlot
+public enum EquipSlot
 {
     Headgear,
     Face,
@@ -16,18 +16,13 @@ public enum ItemSlot
     COUNT,
 }
 
-public class Item : MonoBehaviour
+[CreateAssetMenu(fileName = "Create Item", menuName = "Items/Create New")]
+public class Item: ScriptableObject
 {
-    [Header("Stats")]
-    public string itemName;
-    public Sprite itemIcon;
-    public int itemPrice;
-    public ItemSlot itemSlot;
-
-    [Header("References")]
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI priceText;
-    public Image icon;
+    public string    itemName;
+    public int       itemPrice;
+    public EquipSlot itemSlot;
+    public Sprite    itemIcon;
 }
 
 

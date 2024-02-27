@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
     public InventoryWindow inventoryWindow;
+
+    public TextMeshProUGUI goldText;
     public int gold;
 
     public bool hasSpace()
@@ -18,49 +22,20 @@ public class Inventory : MonoBehaviour
         items.Add(item);
     }
 
-    public void UpdateUI()
+    internal void SellItem(int index)
     {
-        int index = 0;
-        foreach(Item item in items)
-        {
-            RectTransform rt = item.icon.rectTransform;
-            Item slot = inventoryWindow.content.GetChild(index).GetComponent<Item>(); 
-            slot.nameText.text = item.itemName;
-            slot.priceText.text = item.itemPrice.ToString() + "G";
-            slot.icon.sprite = item.itemIcon;
+        AddGold(items[index].itemPrice/3);
+        RemoveItem(items[index]);
+        inventoryWindow.GenerateInventory();
+    }
 
-            /*
-            Definitely not the prettiest thing to do, but the sprites came in different
-            sizes and shapes to fit the character, so I manually fixed them according to the slot.
-            Would definitely not do this in a real project, since I would have proper icons.
-             */
+    private void RemoveItem(Item item)
+    {
+        items.Remove(item);
+    }
 
-            if (item.itemSlot == ItemSlot.Headgear)
-            {
-                rt.localScale = Vector3.one * 1.5f;
-                rt.anchoredPosition = new Vector3(0, -9.36f, 0);
-            }
-            if (item.itemSlot == ItemSlot.Face)
-            {
-                rt.localScale = Vector3.one * 2f;
-                rt.anchoredPosition = new Vector3(0, -9.36f, 0);
-            }
-            if (item.itemSlot == ItemSlot.Armor)
-            {
-                rt.localScale = Vector3.one * 1.5f;
-                rt.anchoredPosition = new Vector3(0, 15, 0);
-            }
-            if (item.itemSlot == ItemSlot.Pants)
-            {
-                rt.localScale = Vector3.one * 1.5f;
-                rt.anchoredPosition = new Vector3(0, 20, 0);
-            }
-            if (item.itemSlot == ItemSlot.Dagger)
-            {
-                rt.localScale = Vector3.one * 3f;
-                rt.anchoredPosition = new Vector3(0, -9.36f, 0);
-            }
-            index++;
-        }
+    private void AddGold(int amount)
+    {
+        gold +=amount;
     }
 }
