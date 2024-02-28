@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class used on the player for it to be able to Interact with the Interactables.
 public class Interactor : MonoBehaviour
 {
     public IInteractable target;
@@ -35,12 +36,6 @@ public class Interactor : MonoBehaviour
 
     private void Update()
     {
-        if (target != null)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                target.StartInteraction();
-            }
-        }
+        if (Input.GetKeyDown(KeyCode.E) && target != null) target.StartInteraction();
     }
 }

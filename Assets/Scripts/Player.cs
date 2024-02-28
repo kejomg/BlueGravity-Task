@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //References for the sprite renderers for the equipped items.
     [Header("Equipments")]
-    public List<ItemSlot> equips = new List<ItemSlot>();
     public SpriteRenderer headSprite;
     public SpriteRenderer faceSprite;
     public SpriteRenderer armorSprite;
@@ -14,26 +14,35 @@ public class Player : MonoBehaviour
     public SpriteRenderer weaponSpriteL;
     public SpriteRenderer weaponSpriteR;
 
+    //References for the inventory and equipment window.
     [Header("Inventory")]
     public Inventory inventory;
     public EquipmentsWindow equipments;
 
+    //Equips an item.
     public void EquipItem(int index)
     {
         Item itemToEquip = inventory.items[index];
-        EquipSlot slot = itemToEquip.itemSlot;
-        equips[(int)slot].item = itemToEquip;
+        int equipSlot = (int)itemToEquip.itemSlot;
+
+        //Removes the item from the inventory (as it is now equipped, and will be in a different list)
         inventory.RemoveItem(itemToEquip);
 
-        if (equipments.equips[(int)slot] != null)
-        {
-            inventory.AddItem(equipments.equips[(int)slot].item);
-        }
-        equipments.equips[(int)slot].item = itemToEquip;
-        equipments.UpdateUI(equipments.equips[(int)slot]);
-        inventory.inventoryWindow.GenerateInventory();
+        //Equips the equipped item in that slot, if there's one.
+        if (equipments.equips[equipSlot] != null) equipments.UnequipItem(equipSlot);
 
-        switch (slot)
+        equipments.equips[equipSlot].icon.gameObject.SetActive(true);
+        equipments.equips[equipSlot].item = itemToEquip;
+        equipments.UpdateUI(equipments.equips[equipSlot]);
+
+        inventory.inventoryWindow.GenerateInventory();
+        EquipOnCharacter(itemToEquip);
+    }
+
+    //Visually equips an item.
+    public void EquipOnCharacter(Item itemToEquip)
+    {
+        switch (itemToEquip.itemSlot)
         {
             case EquipSlot.Headgear:
                 headSprite.sprite = itemToEquip.itemIcon;

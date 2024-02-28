@@ -16,9 +16,23 @@ public class EquipmentsWindow : MonoBehaviour
         UpdateUI(equips[4]);
     }
 
+    //Updates the UI object for that specific slot.
     public void UpdateUI(ItemSlot slot)
     {
-        slot.nameText.text = slot.item.itemName;
-        slot.icon.sprite = slot.item.itemIcon;
+        slot.nameText.text = slot.item ? slot.item.itemName : "nothing";
+        slot.icon.sprite = slot.item ? slot.item.itemIcon : null;
+    }
+
+    //Unequips the item in equips[index]
+    public void UnequipItem(int index)
+    {
+        if (equips[index].item != null)
+        {
+            player.inventory.AddItem(equips[index].item);
+            player.inventory.inventoryWindow.GenerateInventory();
+            equips[index].item = null;
+            equips[index].icon.gameObject.SetActive(false);
+        }
+        UpdateUI(equips[index]);
     }
 }

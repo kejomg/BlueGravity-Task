@@ -9,7 +9,6 @@ using static UnityEditor.Progress;
 public class Shop : MonoBehaviour
 {
     public Player player;
-
     public List<Item> items = new();
     public Transform content;
     public GameObject ItemShopPrefab;
@@ -18,7 +17,7 @@ public class Shop : MonoBehaviour
         GenerateShop();
     }
 
-    //Generates the shop items
+    //Generates the shop items according to the "items" list. Also adds the "BuyItem" function to the buttons.
     void GenerateShop()
     {
         int index = 0;
@@ -32,7 +31,7 @@ public class Shop : MonoBehaviour
         }
     }
 
-    //Updates the UI.
+    //Updates the UI for that slot.
     void UpdateUI(GameObject go, Item item)
     {
         ItemSlot itemSlot = go.GetComponent<ItemSlot>();
@@ -42,6 +41,7 @@ public class Shop : MonoBehaviour
         itemSlot.icon.sprite = item.itemIcon;
     }
 
+    //Buys an item.
     public void BuyItem(int index)
     {
         Item item = items[index];

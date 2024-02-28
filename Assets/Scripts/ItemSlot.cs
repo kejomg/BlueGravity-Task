@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+//Item slots, used in Equipment, shop, and inventory tabs.
 public class ItemSlot : MonoBehaviour
 {
     [Header("References")]
